@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# End the Adventure game session by killing the tmux session
-tmux kill-session -t adventure_session 2>/dev/null
+# End the game session by killing the tmux session
+tmux kill-session -t game_session 2>/dev/null
 
 if [ $? -eq 0 ]; then
-    echo "Adventure game session ended successfully."
+    echo "Game session ended successfully."
 else
-    echo "No active Adventure game session found."
+    echo "No active game session found."
 fi
