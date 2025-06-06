@@ -1,19 +1,14 @@
 #!/bin/bash
 
-# Check if game_config.txt exists
-if [ ! -f "game_config.txt" ]; then
-    echo "Error: game_config.txt not found. Please create it with the game name."
+# Check if game name is provided as argument
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <game_name>"
+    echo "Example: $0 adventure"
     exit 1
 fi
 
-# Read the game name from the config file
-GAME=$(cat game_config.txt | tr -d '\n')
-
-# Check if the game is specified
-if [ -z "$GAME" ]; then
-    echo "Error: No game specified in game_config.txt"
-    exit 1
-fi
+# Get the game name from the first argument
+GAME="$1"
 
 # Check if the game binary is installed
 if ! command -v "$GAME" &> /dev/null; then

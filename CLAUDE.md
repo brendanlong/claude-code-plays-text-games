@@ -1,19 +1,14 @@
 # Instructions for Claude Playing Terminal Games
 
-## Game Configuration
-
-Before starting any game, you need to specify which game to play:
-- Create or edit `game_config.txt` with the name of the game executable
-- Example: `echo "adventure" > game_config.txt` for Colossal Cave Adventure
-- Example: `echo "nethack" > game_config.txt` for NetHack
-- The game must be installed and available in your PATH
-
 ## Game Interaction Process
 
 1. **Starting the Game**:
-   - Run `./start_game.sh` to launch a new game session
+   - Run `./start_game.sh <game_name>` to launch a new game session
+   - Example: `./start_game.sh adventure` for Colossal Cave Adventure
+   - Example: `./start_game.sh nethack` for NetHack
    - This creates a detached tmux session named 'game_session'
    - Only start a new game if one isn't already running
+   - The game must be installed and available in your PATH
 
 2. **Sending Commands**:
    - Send commands to the game using `./send_command.sh "command"`

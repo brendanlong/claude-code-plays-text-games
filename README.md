@@ -9,40 +9,30 @@ This project contains utility scripts that allow Claude to interact with various
 - `read_output.sh` - Reads the current output from the game
 - `end_game.sh` - Terminates the running game session
 
-## Configuration
-
-Before using these scripts, you need to specify which game to play:
-
-1. Create a `game_config.txt` file with the name of the game executable:
-   ```bash
-   echo "adventure" > game_config.txt
-   ```
-
-   Other examples:
-   - `echo "nethack" > game_config.txt` for NetHack
-   - `echo "zork" > game_config.txt` for Zork
-   - Any other terminal-based game executable
-
 ## Usage
 
-1. Configure the game (see above)
-
-2. Start the game:
+1. Start the game by providing the game name as an argument:
    ```
-   ./start_game.sh
+   ./start_game.sh <game_name>
    ```
 
-3. Send a command to the game:
+   Examples:
+   - `./start_game.sh adventure` for Colossal Cave Adventure
+   - `./start_game.sh nethack` for NetHack
+   - `./start_game.sh zork` for Zork
+   - Any other terminal-based game executable
+
+2. Send a command to the game:
    ```
    ./send_command.sh "command"
    ```
 
-4. Read the current output:
+3. Read the current output:
    ```
    ./read_output.sh
    ```
 
-5. End the game session when done:
+4. End the game session when done:
    ```
    ./end_game.sh
    ```
@@ -50,11 +40,8 @@ Before using these scripts, you need to specify which game to play:
 ## Example Interaction
 
 ```bash
-# Configure to play adventure
-echo "adventure" > game_config.txt
-
-# Start a new game
-./start_game.sh
+# Start a new adventure game
+./start_game.sh adventure
 
 # Read the initial output
 ./read_output.sh
@@ -73,4 +60,3 @@ echo "adventure" > game_config.txt
 
 - tmux
 - The game executable must be installed and available in your PATH
-- The `game_config.txt` file is ignored by git for local configuration
