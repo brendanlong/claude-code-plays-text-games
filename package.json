@@ -1,0 +1,13 @@
+{
+  "name": "claude-game-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for terminal game interaction",
+  "main": "mcp-server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node mcp-server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  }
+}

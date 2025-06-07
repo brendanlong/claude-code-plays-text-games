@@ -1,28 +1,35 @@
 # Instructions for Claude Playing Terminal Games
 
+## IMPORTANT: Use MCP Tools, NOT Shell Scripts
+
+**WARNING**: NEVER run the shell scripts (*.sh) directly using the Bash tool - this will cause permissions issues. Always use the MCP game controller tools instead.
+
 ## Game Interaction Process
 
 1. **Starting the Game**:
-   - Run `./start_game.sh <game_name>` to launch a new game session
-   - Example: `./start_game.sh adventure` for Colossal Cave Adventure
-   - Example: `./start_game.sh nethack` for NetHack
+   - Use the `mcp__game-controller__start_game` tool to launch a new game session
+   - Example: `mcp__game-controller__start_game` with `game_name: "adventure"` for Colossal Cave Adventure
+   - Example: `mcp__game-controller__start_game` with `game_name: "nethack"` for NetHack
    - This creates a detached tmux session named 'game_session'
    - Only start a new game if one isn't already running
    - The game must be installed and available in your PATH
 
 2. **Sending Commands**:
-   - Send commands to the game using `./send_command.sh "command"`
-   - Example: `./send_command.sh "look"` or `./send_command.sh "go north"`
-   - Always quote commands containing spaces
+   - Send commands to the game using `mcp__game-controller__send_command` tool
+   - Example: `mcp__game-controller__send_command` with `command: "look"` or `command: "go north"`
    - After sending a command, always read the output to see the results
 
-3. **Reading Output**:
-   - Run `./read_output.sh` to get the current game state
+3. **Sending Special Keys**:
+   - Use `mcp__game-controller__send_key` tool to send special keys
+   - Example: `mcp__game-controller__send_key` with `key: "Enter"` or `key: "Escape"`
+
+4. **Reading Output**:
+   - Use `mcp__game-controller__read_output` tool to get the current game state
    - Always read the output after every command to understand the game state
    - Parse the output based on the specific game you're playing
 
-4. **Ending the Game**:
-   - Run `./end_game.sh` to terminate the game session
+5. **Ending the Game**:
+   - Use `mcp__game-controller__end_game` tool to terminate the game session
    - This kills the tmux session running the game
 
 ## Important Notes

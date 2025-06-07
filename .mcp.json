@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "game-controller": {
+      "type": "stdio",
+      "command": "./mcp-server.js",
+      "args": [],
+      "env": {}
+    }
+  }
+}
