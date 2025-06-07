@@ -26,6 +26,18 @@ This project contains utility scripts that allow Claude to interact with various
    ```
    ./send_command.sh "command"
    ```
+   
+   Or send special keys:
+   ```
+   ./send_command.sh --key KeyName
+   ```
+   
+   Examples:
+   - `./send_command.sh "go north"` - sends text command with Enter
+   - `./send_command.sh --key Escape` - sends Escape key
+   - `./send_command.sh --key Tab` - sends Tab key
+   - `./send_command.sh --key C-c` - sends Ctrl+C
+   - `./send_command.sh -k Space` - sends Space key (short form)
 
 3. Read the current output:
    ```
