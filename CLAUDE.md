@@ -38,3 +38,5 @@
 - Read the output carefully after each command
 - Be systematic in your approach and adapt to each game's unique mechanics
 - Some games may have save/restore features - check their documentation
+- Make sure to come up with a plan and use your TODO list feature
+- You may have notes for the game in the game-notes/ directory
