@@ -6,5 +6,5 @@ if ! tmux has-session -t game_session 2>/dev/null; then
     exit 1
 fi
 
-# Capture the entire pane content
-tmux capture-pane -t game_session -p
+# Capture the entire pane content with colors preserved
+tmux capture-pane -t game_session -pe
