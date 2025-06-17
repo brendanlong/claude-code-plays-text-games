@@ -27,4 +27,4 @@ fi
 tmux new-session -d -s game_session "$GAME"
 
 echo "$GAME started in tmux session 'game_session'"
-echo "Use ./send_command.sh to interact and ./read_output.sh to see the output"
+echo "Use ./send_line.sh to interact and ./read_output.sh to see the output"
