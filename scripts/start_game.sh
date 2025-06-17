@@ -2,8 +2,9 @@
 
 # Check if game name is provided as argument
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 <game_name>"
+    echo "Usage: $0 <game_name> [args...]"
     echo "Example: $0 adventure"
+    echo "Example: $0 nano -R"
     exit 1
 fi
 
@@ -23,8 +24,8 @@ if tmux has-session -t game_session 2>/dev/null; then
     exit 1
 fi
 
-# Start a new detached tmux session running the game
-tmux new-session -d -s game_session "$GAME"
+# Start a new detached tmux session running the game with all arguments
+tmux new-session -d -s game_session "$@"
 
 echo "$GAME started in tmux session 'game_session'"
 echo "Use ./send_line.sh to interact and ./read_output.sh to see the output"

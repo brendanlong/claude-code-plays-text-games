@@ -26,12 +26,12 @@ describe('Game Controller Integration Tests', () => {
 
   describe('Basic functionality', () => {
     test('starting nano game', async () => {
-      const result = await startGame('nano');
+      const result = await startGame('nano', ['-R']);
       expect(result).toMatchSnapshot();
     });
 
     test('single key sending', async () => {
-      await startGame('nano');
+      await startGame('nano', ['-R']);
       await sleep(10);
 
       const result = await sendKeys(['a']);
@@ -39,7 +39,7 @@ describe('Game Controller Integration Tests', () => {
     });
 
     test('multiple keys sending', async () => {
-      await startGame('nano');
+      await startGame('nano', ['-R']);
       await sleep(10);
 
       const result = await sendKeys(['H', 'e', 'l', 'l', 'o']);
@@ -47,7 +47,7 @@ describe('Game Controller Integration Tests', () => {
     });
 
     test('sending line', async () => {
-      await startGame('nano');
+      await startGame('nano', ['-R']);
       await sleep(10);
 
       const result = await sendLine('Hello World!');
@@ -60,7 +60,7 @@ describe('Game Controller Integration Tests', () => {
       const workflow = [];
 
       // Start nano
-      const start = await startGame('nano');
+      const start = await startGame('nano', ['-R']);
       workflow.push({ action: 'start', result: start });
 
       await sleep(10);
@@ -86,7 +86,7 @@ describe('Game Controller Integration Tests', () => {
       const workflow = [];
 
       // Start nano
-      await startGame('nano');
+      await startGame('nano', ['-R']);
       await sleep(10);
 
       // Send multiple keys at once
@@ -131,7 +131,7 @@ describe('Game Controller Integration Tests', () => {
 
   describe('Function interface tests', () => {
     test('sendKeys function handles array inputs', async () => {
-      await startGame('nano');
+      await startGame('nano', ['-R']);
       await sleep(10);
 
       // Test single key array
@@ -148,7 +148,7 @@ describe('Game Controller Integration Tests', () => {
 
     test('all functions return consistent result format', async () => {
       // Test successful operations
-      const startResult = await startGame('nano');
+      const startResult = await startGame('nano', ['-R']);
       expect(startResult).toHaveProperty('success');
       expect(startResult).toHaveProperty('output');
 

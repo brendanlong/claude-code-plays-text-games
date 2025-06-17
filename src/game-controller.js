@@ -20,8 +20,8 @@ async function runScript(scriptPath, args = []) {
 }
 
 // Game controller functions
-export async function startGame(gameName) {
-  return await runScript('../scripts/start_game.sh', [gameName]);
+export async function startGame(gameName, args = []) {
+  return await runScript('../scripts/start_game.sh', [gameName, ...args]);
 }
 
 export async function sendLine(command) {
@@ -51,6 +51,13 @@ export const toolSchemas = [
         game_name: {
           type: 'string',
           description: 'Name of the game to start (e.g., "adventure", "nethack")'
+        },
+        args: {
+          type: 'array',
+          items: {
+            type: 'string'
+          },
+          description: 'Optional command line arguments to pass to the game (e.g., ["-R"] for nano restricted mode)'
         }
       },
       required: ['game_name']
@@ -111,7 +118,7 @@ export const toolSchemas = [
 export async function handleToolCall(name, args) {
   switch (name) {
     case 'start_game':
-      return await startGame(args.game_name);
+      return await startGame(args.game_name, args.args);
 
     case 'send_line':
       return await sendLine(args.command);

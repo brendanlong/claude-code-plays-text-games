@@ -109,8 +109,8 @@ Test content
 
 
                [ Welcome to nano.  For basic help, type Ctrl+G. ]
-^G Help      ^O Write Out ^F Where Is  ^K Cut       ^T Execute   ^C Location
-^X Exit      ^R Read File ^\\ Replace   ^U Paste     ^J Justify   ^/ Go To Line",
+^G Help      ^O Write Out ^F Where Is  ^K Cut       ^C Location  M-U Undo
+^X Exit      ^J Justify   ^\\ Replace   ^U Paste     ^/ Go To LineM-E Redo",
       "success": true,
     },
   },
@@ -168,8 +168,8 @@ Test 123
 
 
                [ Welcome to nano.  For basic help, type Ctrl+G. ]
-^G Help      ^O Write Out ^F Where Is  ^K Cut       ^T Execute   ^C Location
-^X Exit      ^R Read File ^\\ Replace   ^U Paste     ^J Justify   ^/ Go To Line",
+^G Help      ^O Write Out ^F Where Is  ^K Cut       ^C Location  M-U Undo
+^X Exit      ^J Justify   ^\\ Replace   ^U Paste     ^/ Go To LineM-E Redo",
       "success": true,
     },
   },
