@@ -28,9 +28,7 @@ export async function sendCommand(command) {
   return await runScript('./send_command.sh', [command]);
 }
 
-export async function sendKey(key) {
-  // Handle both single key (string) and multiple keys (array)
-  const keys = Array.isArray(key) ? key : [key];
+export async function sendKeys(keys) {
   return await runScript('./send_key.sh', keys);
 }
 
@@ -73,25 +71,17 @@ export const toolSchemas = [
     }
   },
   {
-    name: 'send_key',
-    description: 'Send one or more special keys to the running game',
+    name: 'send_keys',
+    description: 'Send special keys to the running game',
     inputSchema: {
       type: 'object',
       properties: {
         key: {
-          oneOf: [
-            {
-              type: 'string',
-              description: 'Single key to send (e.g., "Escape", "C-c", "Tab", "Enter")'
-            },
-            {
-              type: 'array',
-              items: {
-                type: 'string'
-              },
-              description: 'Array of keys to send in sequence (e.g., ["Tab", "Enter"])'
-            }
-          ]
+          type: 'array',
+          items: {
+            type: 'string'
+          },
+          description: 'Array of keys to send in sequence (e.g., ["Tab", "Enter"]).'
         }
       },
       required: ['key']
@@ -122,19 +112,19 @@ export async function handleToolCall(name, args) {
   switch (name) {
     case 'start_game':
       return await startGame(args.game_name);
-    
+
     case 'send_command':
       return await sendCommand(args.command);
-    
-    case 'send_key':
-      return await sendKey(args.key);
-    
+
+    case 'send_keys':
+      return await sendKeys(args.key);
+
     case 'read_output':
       return await readOutput();
-    
+
     case 'end_game':
       return await endGame();
-    
+
     default:
       throw new Error(`Unknown tool: ${name}`);
   }
