@@ -2,6 +2,8 @@
 
 This project provides an MCP (Model Context Protocol) server that allows Claude to interact with terminal-based games through tmux. It enables Claude to play text-based games like Colossal Cave Adventure, NetHack, Zork, and other terminal games.
 
+**Security note**: The `start_game` tool included in this repo can run arbitrary commands, so you probably don't want to give Claude unconditional permission to run it. The other commands are relatively safe to allow since they only work on whatever game is started, and the tmux session will end with it. This assumes you're running and actual game and not something like `bash` (in which case, `send_line` and `send_keys` can also run arbitrary commands).
+
 ## Examples
 
 - **[Claude Playing Colossal Cave Adventure](https://youtu.be/ciDHtvSeZQE)** - Watch Claude explore the classic adventure game
