@@ -24,8 +24,8 @@ export async function startGame(gameName) {
   return await runScript('../scripts/start_game.sh', [gameName]);
 }
 
-export async function sendCommand(command) {
-  return await runScript('../scripts/send_command.sh', [command]);
+export async function sendLine(command) {
+  return await runScript('../scripts/send_line.sh', [command]);
 }
 
 export async function sendKeys(keys) {
@@ -57,7 +57,7 @@ export const toolSchemas = [
     }
   },
   {
-    name: 'send_command',
+    name: 'send_line',
     description: 'Send a text command to the running game',
     inputSchema: {
       type: 'object',
@@ -76,7 +76,7 @@ export const toolSchemas = [
     inputSchema: {
       type: 'object',
       properties: {
-        key: {
+        keys: {
           type: 'array',
           items: {
             type: 'string'
@@ -84,7 +84,7 @@ export const toolSchemas = [
           description: 'Array of keys to send in sequence (e.g., ["Tab", "Enter"]).'
         }
       },
-      required: ['key']
+      required: ['keys']
     }
   },
   {
@@ -113,11 +113,11 @@ export async function handleToolCall(name, args) {
     case 'start_game':
       return await startGame(args.game_name);
 
-    case 'send_command':
-      return await sendCommand(args.command);
+    case 'send_line':
+      return await sendLine(args.command);
 
     case 'send_keys':
-      return await sendKeys(args.key);
+      return await sendKeys(args.keys);
 
     case 'read_output':
       return await readOutput();

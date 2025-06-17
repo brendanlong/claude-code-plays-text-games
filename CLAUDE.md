@@ -15,14 +15,14 @@
    - The game must be installed and available in your PATH
 
 2. **Sending Commands**:
-   - Send commands to the game using `mcp__game-controller__send_command` tool
-   - Example: `mcp__game-controller__send_command` with `command: "look"` or `command: "go north"`
+   - Send commands to the game using `mcp__game-controller__send_line` tool
+   - Example: `mcp__game-controller__send_line` with `command: "look"` or `command: "go north"`
    - After sending a command, always read the output to see the results
 
 3. **Sending Special Keys**:
    - Use `mcp__game-controller__send_keys` tool to send special keys
-   - Example: `mcp__game-controller__send_keys` with `key: ["Enter"]` or `key: ["Escape"]`
-   - Note: The key parameter should be an array of key names
+   - Example: `mcp__game-controller__send_keys` with `keys: ["Enter"]` or `keys: ["Escape"]`
+   - Note: The keys parameter should be an array of key names
    - Use tmux key names (found in `man tmux` under "KEY BINDINGS" section)
    - **Available key names:**
      - Arrow keys: `Up`, `Down`, `Left`, `Right`

@@ -12,7 +12,7 @@ Key sent: o
 }
 `;
 
-exports[`Game Controller Integration Tests Basic functionality sending command 1`] = `
+exports[`Game Controller Integration Tests Basic functionality sending line 1`] = `
 {
   "output": "Command sent: "Hello World!"
 ",
@@ -31,7 +31,7 @@ exports[`Game Controller Integration Tests Basic functionality single key sendin
 exports[`Game Controller Integration Tests Basic functionality starting nano game 1`] = `
 {
   "output": "nano started in tmux session 'game_session'
-Use ./send_command.sh to interact and ./read_output.sh to see the output
+Use ./send_line.sh to interact and ./read_output.sh to see the output
 ",
   "success": true,
 }
@@ -45,7 +45,7 @@ exports[`Game Controller Integration Tests Error handling commands without game 
     "success": false,
   },
   "send_command": {
-    "error": "Command failed: ../scripts/send_command.sh "test"
+    "error": "Command failed: ../scripts/send_line.sh "test"
 ",
     "success": false,
   },
@@ -71,7 +71,7 @@ exports[`Game Controller Integration Tests Game interaction workflow complete na
     "action": "start",
     "result": {
       "output": "nano started in tmux session 'game_session'
-Use ./send_command.sh to interact and ./read_output.sh to see the output
+Use ./send_line.sh to interact and ./read_output.sh to see the output
 ",
       "success": true,
     },

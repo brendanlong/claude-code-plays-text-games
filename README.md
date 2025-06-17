@@ -24,11 +24,11 @@ This project provides an MCP (Model Context Protocol) server that allows Claude 
 - **`start_game`**: Start a new game session
   - Parameters: `game_name` (e.g., "adventure", "nethack")
   
-- **`send_command`**: Send text commands to the game
+- **`send_line`**: Send text commands to the game
   - Parameters: `command` (the command text)
   
 - **`send_keys`**: Send special keys to the game
-  - Parameters: `key` (array of key names, e.g., ["Escape"], ["C-c"])
+  - Parameters: `keys` (array of key names, e.g., ["Escape"], ["C-c"])
   
 - **`read_output`**: Read the current game state/output
   
@@ -62,7 +62,7 @@ claude-code-plays-text-games/
 │   └── game-controller.js # Game interaction logic
 ├── scripts/               # Shell scripts for game interaction
 │   ├── start_game.sh
-│   ├── send_command.sh
+│   ├── send_line.sh
 │   ├── send_key.sh
 │   ├── read_output.sh
 │   └── end_game.sh

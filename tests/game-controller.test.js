@@ -1,6 +1,6 @@
 import {
   startGame,
-  sendCommand,
+  sendLine,
   sendKeys,
   readOutput,
   endGame
@@ -46,11 +46,11 @@ describe('Game Controller Integration Tests', () => {
       expect(result).toMatchSnapshot();
     });
 
-    test('sending command', async () => {
+    test('sending line', async () => {
       await startGame('nano');
       await sleep(10);
 
-      const result = await sendCommand('Hello World!');
+      const result = await sendLine('Hello World!');
       expect(result).toMatchSnapshot();
     });
   });
@@ -66,7 +66,7 @@ describe('Game Controller Integration Tests', () => {
       await sleep(10);
 
       // Type some text
-      const type = await sendCommand('Test content');
+      const type = await sendLine('Test content');
       workflow.push({ action: 'type', result: type });
 
       await sleep(500);
@@ -114,7 +114,7 @@ describe('Game Controller Integration Tests', () => {
       const sendKeyError = await sendKeys(['Enter']);
       errors.send_key = sendKeyError;
 
-      const sendCommandError = await sendCommand('test');
+      const sendCommandError = await sendLine('test');
       errors.send_command = sendCommandError;
 
       const readOutputError = await readOutput();
@@ -154,7 +154,7 @@ describe('Game Controller Integration Tests', () => {
 
       await sleep(10);
 
-      const commandResult = await sendCommand('test');
+      const commandResult = await sendLine('test');
       expect(commandResult).toHaveProperty('success');
       expect(commandResult).toHaveProperty('output');
 
