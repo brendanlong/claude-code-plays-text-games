@@ -1,74 +1,97 @@
 # Claude Plays Terminal Games
 
-This project contains utility scripts that allow Claude to interact with various terminal-based games through tmux.
+This project provides an MCP (Model Context Protocol) server that allows Claude to interact with terminal-based games through tmux. It enables Claude to play text-based games like Colossal Cave Adventure, NetHack, Zork, and other terminal games.
 
-## Scripts
+## Features
 
-- `start_game.sh` - Starts a new game in a tmux session
-- `send_command.sh` - Sends a command to the running game
-- `read_output.sh` - Reads the current output from the game
-- `end_game.sh` - Terminates the running game session
+- **MCP Server**: Provides a clean API for Claude to interact with games
+- **Terminal Game Support**: Works with any terminal-based game available in your PATH
+- **Tmux Integration**: Uses tmux for reliable session management
+- **Special Key Support**: Send complex key combinations and special keys
+- **Game Notes**: Includes notes and guides for specific games
 
-## Usage
+## Quick Start
 
-1. Start the game by providing the game name as an argument:
-   ```
-   ./start_game.sh <game_name>
-   ```
-
-   Examples:
-   - `./start_game.sh adventure` for Colossal Cave Adventure
-   - `./start_game.sh nethack` for NetHack
-   - `./start_game.sh zork` for Zork
-   - Any other terminal-based game executable
-
-2. Send a command to the game:
-   ```
-   ./send_command.sh "command"
-   ```
-   
-   Or send special keys:
-   ```
-   ./send_command.sh --key KeyName
-   ```
-   
-   Examples:
-   - `./send_command.sh "go north"` - sends text command with Enter
-   - `./send_command.sh --key Escape` - sends Escape key
-   - `./send_command.sh --key Tab` - sends Tab key
-   - `./send_command.sh --key C-c` - sends Ctrl+C
-   - `./send_command.sh -k Space` - sends Space key (short form)
-
-3. Read the current output:
-   ```
-   ./read_output.sh
+1. **Install dependencies**:
+   ```bash
+   npm install
    ```
 
-4. End the game session when done:
-   ```
-   ./end_game.sh
-   ```
+2. **Restart Claude Code** - it will automatically detect the `.mcp.json` file and load the game controller server!
 
-## Example Interaction
+## Available MCP Tools
 
-```bash
-# Start a new adventure game
-./start_game.sh adventure
+- **`start_game`**: Start a new game session
+  - Parameters: `game_name` (e.g., "adventure", "nethack")
+  
+- **`send_command`**: Send text commands to the game
+  - Parameters: `command` (the command text)
+  
+- **`send_keys`**: Send special keys to the game
+  - Parameters: `key` (array of key names, e.g., ["Escape"], ["C-c"])
+  
+- **`read_output`**: Read the current game state/output
+  
+- **`end_game`**: Terminate the game session
 
-# Read the initial output
-./read_output.sh
+## Supported Games
 
-# Send a command
-./send_command.sh "help"
+Any terminal-based game that can run in tmux, including:
+- **Colossal Cave Adventure** (`adventure`)
+- **NetHack** (`nethack`)
+- **Zork** series (`zork1`, `zork2`, `zork3`)
+- **Dwarf Fortress** (`dwarffortress`)
+- And many more...
 
-# Read the response
-./read_output.sh
+## Key Names Reference
 
-# End the game
-./end_game.sh
+Use these key names with the `send_keys` tool:
+- Arrow keys: `Up`, `Down`, `Left`, `Right`
+- Special keys: `BSpace`, `BTab`, `DC` (Delete), `End`, `Enter`, `Escape`, `Home`, `IC` (Insert), `Space`, `Tab`
+- Page keys: `NPage`/`PageDown`, `PPage`/`PageUp`
+- Function keys: `F1` to `F12`
+- Modifiers: `C-` (Ctrl), `S-` (Shift), `M-` (Alt)
+- Examples: `C-c` (Ctrl+C), `S-Tab` (Shift+Tab), `M-a` (Alt+A)
+
+## Project Structure
+
+```
+claude-code-plays-text-games/
+├── src/                   # Source code
+│   ├── mcp-server.js      # Main MCP server
+│   └── game-controller.js # Game interaction logic
+├── scripts/               # Shell scripts for game interaction
+│   ├── start_game.sh
+│   ├── send_command.sh
+│   ├── send_key.sh
+│   ├── read_output.sh
+│   └── end_game.sh
+├── tests/                 # Test files and snapshots
+│   ├── game-controller.test.js
+│   └── __snapshots__/
+├── game-notes/            # Game-specific notes and guides
+│   └── dwarffortress/
+├── CLAUDE.md              # Instructions for Claude
+└── .mcp.json              # MCP server configuration
 ```
 
 ## Requirements
 
+- Node.js
 - tmux
-- The game executable must be installed and available in your PATH
+- Game executables installed and available in PATH
+- Claude Code with MCP support
+
+## Testing
+
+Run the test suite:
+```bash
+npm test
+```
+
+## Troubleshooting
+
+- Use `/mcp` in Claude Code to check if the server is connected
+- Ensure all game binaries are installed and in your PATH
+- Check that tmux is installed and working
+- Make sure you've run `npm install` to install dependencies

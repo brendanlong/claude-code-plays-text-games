@@ -1,10 +1,10 @@
 import {
   startGame,
   sendCommand,
-  sendKey,
+  sendKeys,
   readOutput,
   endGame
-} from './game-controller.js';
+} from '../src/game-controller.js';
 
 // Helper to sleep
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -20,7 +20,7 @@ function cleanOutput(output) {
 
 describe('Game Controller Integration Tests', () => {
   afterEach(async () => {
-    await sendKey(['C-x', 'n']);
+    await sendKeys(['C-x', 'n']);
     await endGame();
   });
 
@@ -34,7 +34,7 @@ describe('Game Controller Integration Tests', () => {
       await startGame('nano');
       await sleep(10);
 
-      const result = await sendKey('a');
+      const result = await sendKeys(['a']);
       expect(result).toMatchSnapshot();
     });
 
@@ -42,7 +42,7 @@ describe('Game Controller Integration Tests', () => {
       await startGame('nano');
       await sleep(10);
 
-      const result = await sendKey(['H', 'e', 'l', 'l', 'o']);
+      const result = await sendKeys(['H', 'e', 'l', 'l', 'o']);
       expect(result).toMatchSnapshot();
     });
 
@@ -76,7 +76,7 @@ describe('Game Controller Integration Tests', () => {
       workflow.push({ action: 'read_after_type', result: { success: read1.success, output: cleanOutput(read1.output) } });
 
       // Exit without saving using Ctrl+X followed by 'n' for no
-      const exit = await sendKey(['C-x', 'n']);
+      const exit = await sendKeys(['C-x', 'n']);
       workflow.push({ action: 'exit_no_save', result: exit });
 
       expect(workflow).toMatchSnapshot();
@@ -90,7 +90,7 @@ describe('Game Controller Integration Tests', () => {
       await sleep(10);
 
       // Send multiple keys at once
-      const multiKeys = await sendKey(['T', 'e', 's', 't', 'Space', '1', '2', '3']);
+      const multiKeys = await sendKeys(['T', 'e', 's', 't', 'Space', '1', '2', '3']);
       workflow.push({ action: 'multi_keys', result: multiKeys });
 
       await sleep(500);
@@ -100,7 +100,7 @@ describe('Game Controller Integration Tests', () => {
       workflow.push({ action: 'read_output', result: { success: read.success, output: cleanOutput(read.output) } });
 
       // Exit without saving using multiple keys
-      const exitKeys = await sendKey(['C-x', 'n']);
+      const exitKeys = await sendKeys(['C-x', 'n']);
       workflow.push({ action: 'exit_no_save', result: exitKeys });
 
       expect(workflow).toMatchSnapshot();
@@ -111,7 +111,7 @@ describe('Game Controller Integration Tests', () => {
     test('commands without game session', async () => {
       const errors = {};
 
-      const sendKeyError = await sendKey('Enter');
+      const sendKeyError = await sendKeys(['Enter']);
       errors.send_key = sendKeyError;
 
       const sendCommandError = await sendCommand('test');
@@ -130,17 +130,17 @@ describe('Game Controller Integration Tests', () => {
   });
 
   describe('Function interface tests', () => {
-    test('sendKey function handles both string and array inputs', async () => {
+    test('sendKeys function handles array inputs', async () => {
       await startGame('nano');
       await sleep(10);
 
-      // Test string input
-      const singleKey = await sendKey('a');
+      // Test single key array
+      const singleKey = await sendKeys(['a']);
       expect(singleKey.success).toBe(true);
       expect(singleKey.output).toContain('Key sent: a');
 
-      // Test array input
-      const multipleKeys = await sendKey(['b', 'c']);
+      // Test multiple keys array
+      const multipleKeys = await sendKeys(['b', 'c']);
       expect(multipleKeys.success).toBe(true);
       expect(multipleKeys.output).toContain('Key sent: b');
       expect(multipleKeys.output).toContain('Key sent: c');
@@ -158,7 +158,7 @@ describe('Game Controller Integration Tests', () => {
       expect(commandResult).toHaveProperty('success');
       expect(commandResult).toHaveProperty('output');
 
-      const keyResult = await sendKey('a');
+      const keyResult = await sendKeys(['a']);
       expect(keyResult).toHaveProperty('success');
       expect(keyResult).toHaveProperty('output');
 
@@ -168,7 +168,7 @@ describe('Game Controller Integration Tests', () => {
       // Test error operations
       await endGame();
 
-      const errorResult = await sendKey('a');
+      const errorResult = await sendKeys(['a']);
       expect(errorResult).toHaveProperty('success');
       expect(errorResult.success).toBe(false);
       expect(errorResult).toHaveProperty('error');

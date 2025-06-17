@@ -2,7 +2,7 @@
   "mcpServers": {
     "game-controller": {
       "type": "stdio",
-      "command": "./mcp-server.js",
+      "command": "./src/mcp-server.js",
       "args": [],
       "env": {}
     }

@@ -2,10 +2,10 @@
   "name": "claude-game-mcp-server",
   "version": "1.0.0",
   "description": "MCP server for terminal game interaction",
-  "main": "mcp-server.js",
+  "main": "src/mcp-server.js",
   "type": "module",
   "scripts": {
-    "start": "node mcp-server.js",
+    "start": "node src/mcp-server.js",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest"
   },
   "dependencies": {

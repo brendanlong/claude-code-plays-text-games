@@ -20,8 +20,9 @@
    - After sending a command, always read the output to see the results
 
 3. **Sending Special Keys**:
-   - Use `mcp__game-controller__send_key` tool to send special keys
-   - Example: `mcp__game-controller__send_key` with `key: "Enter"` or `key: "Escape"`
+   - Use `mcp__game-controller__send_keys` tool to send special keys
+   - Example: `mcp__game-controller__send_keys` with `key: ["Enter"]` or `key: ["Escape"]`
+   - Note: The key parameter should be an array of key names
    - Use tmux key names (found in `man tmux` under "KEY BINDINGS" section)
    - **Available key names:**
      - Arrow keys: `Up`, `Down`, `Left`, `Right`

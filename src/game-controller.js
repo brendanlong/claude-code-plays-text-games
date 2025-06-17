@@ -21,23 +21,23 @@ async function runScript(scriptPath, args = []) {
 
 // Game controller functions
 export async function startGame(gameName) {
-  return await runScript('./start_game.sh', [gameName]);
+  return await runScript('../scripts/start_game.sh', [gameName]);
 }
 
 export async function sendCommand(command) {
-  return await runScript('./send_command.sh', [command]);
+  return await runScript('../scripts/send_command.sh', [command]);
 }
 
 export async function sendKeys(keys) {
-  return await runScript('./send_key.sh', keys);
+  return await runScript('../scripts/send_key.sh', keys);
 }
 
 export async function readOutput() {
-  return await runScript('./read_output.sh');
+  return await runScript('../scripts/read_output.sh');
 }
 
 export async function endGame() {
-  return await runScript('./end_game.sh');
+  return await runScript('../scripts/end_game.sh');
 }
 
 // Tool schema definitions

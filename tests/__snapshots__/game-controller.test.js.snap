@@ -40,17 +40,17 @@ Use ./send_command.sh to interact and ./read_output.sh to see the output
 exports[`Game Controller Integration Tests Error handling commands without game session 1`] = `
 {
   "read_output": {
-    "error": "Command failed: ./read_output.sh 
+    "error": "Command failed: ../scripts/read_output.sh 
 ",
     "success": false,
   },
   "send_command": {
-    "error": "Command failed: ./send_command.sh "test"
+    "error": "Command failed: ../scripts/send_command.sh "test"
 ",
     "success": false,
   },
   "send_key": {
-    "error": "Command failed: ./send_key.sh "Enter"
+    "error": "Command failed: ../scripts/send_key.sh "Enter"
 ",
     "success": false,
   },
@@ -59,7 +59,7 @@ exports[`Game Controller Integration Tests Error handling commands without game 
 
 exports[`Game Controller Integration Tests Error handling starting non-existent game 1`] = `
 {
-  "error": "Command failed: ./start_game.sh "nonexistent-game-12345"
+  "error": "Command failed: ../scripts/start_game.sh "nonexistent-game-12345"
 ",
   "success": false,
 }
