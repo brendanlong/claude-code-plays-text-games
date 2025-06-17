@@ -22,6 +22,14 @@
 3. **Sending Special Keys**:
    - Use `mcp__game-controller__send_key` tool to send special keys
    - Example: `mcp__game-controller__send_key` with `key: "Enter"` or `key: "Escape"`
+   - Use tmux key names (found in `man tmux` under "KEY BINDINGS" section)
+   - **Available key names:**
+     - Arrow keys: `Up`, `Down`, `Left`, `Right`
+     - Special keys: `BSpace` (backspace), `BTab` (shift+tab), `DC` (Delete), `End`, `Enter`, `Escape`, `Home`, `IC` (Insert), `Space`, `Tab`
+     - Page keys: `NPage`/`PageDown`/`PgDn`, `PPage`/`PageUp`/`PgUp`
+     - Function keys: `F1` to `F12`
+     - Modifiers: `C-` (Ctrl), `S-` (Shift), `M-` (Alt/Meta)
+     - Examples: `C-c` (Ctrl+C), `S-Tab` (Shift+Tab), `M-a` (Alt+A)
 
 4. **Reading Output**:
    - Use `mcp__game-controller__read_output` tool to get the current game state
