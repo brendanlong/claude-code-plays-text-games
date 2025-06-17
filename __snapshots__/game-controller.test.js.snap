@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Game Controller Integration Tests Basic functionality multiple keys sending 1`] = `
+{
+  "output": "Key sent: H
+Key sent: e
+Key sent: l
+Key sent: l
+Key sent: o
+",
+  "success": true,
+}
+`;
+
+exports[`Game Controller Integration Tests Basic functionality sending command 1`] = `
+{
+  "output": "Command sent: "Hello World!"
+",
+  "success": true,
+}
+`;
+
+exports[`Game Controller Integration Tests Basic functionality single key sending 1`] = `
+{
+  "output": "Key sent: a
+",
+  "success": true,
+}
+`;
+
+exports[`Game Controller Integration Tests Basic functionality starting nano game 1`] = `
+{
+  "output": "nano started in tmux session 'game_session'
+Use ./send_command.sh to interact and ./read_output.sh to see the output
+",
+  "success": true,
+}
+`;
+
+exports[`Game Controller Integration Tests Error handling commands without game session 1`] = `
+{
+  "read_output": {
+    "error": "Command failed: ./read_output.sh 
+",
+    "success": false,
+  },
+  "send_command": {
+    "error": "Command failed: ./send_command.sh "test"
+",
+    "success": false,
+  },
+  "send_key": {
+    "error": "Command failed: ./send_key.sh "Enter"
+",
+    "success": false,
+  },
+}
+`;
+
+exports[`Game Controller Integration Tests Error handling starting non-existent game 1`] = `
+{
+  "error": "Command failed: ./start_game.sh "nonexistent-game-12345"
+",
+  "success": false,
+}
+`;
+
+exports[`Game Controller Integration Tests Game interaction workflow complete nano session - type and exit without saving 1`] = `
+[
+  {
+    "action": "start",
+    "result": {
+      "output": "nano started in tmux session 'game_session'
+Use ./send_command.sh to interact and ./read_output.sh to see the output
+",
+      "success": true,
+    },
+  },
+  {
+    "action": "type",
+    "result": {
+      "output": "Command sent: "Test content"
+",
+      "success": true,
+    },
+  },
+  {
+    "action": "read_after_type",
+    "result": {
+      "output": "GNU nano 8.3                       New Buffer *
+Test content
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               [ Welcome to nano.  For basic help, type Ctrl+G. ]
+^G Help      ^O Write Out ^F Where Is  ^K Cut       ^T Execute   ^C Location
+^X Exit      ^R Read File ^\\ Replace   ^U Paste     ^J Justify   ^/ Go To Line",
+      "success": true,
+    },
+  },
+  {
+    "action": "exit_no_save",
+    "result": {
+      "output": "Key sent: C-x
+Key sent: n
+",
+      "success": true,
+    },
+  },
+]
+`;
+
+exports[`Game Controller Integration Tests Game interaction workflow multiple keys workflow 1`] = `
+[
+  {
+    "action": "multi_keys",
+    "result": {
+      "output": "Key sent: T
+Key sent: e
+Key sent: s
+Key sent: t
+Key sent: Space
+Key sent: 1
+Key sent: 2
+Key sent: 3
+",
+      "success": true,
+    },
+  },
+  {
+    "action": "read_output",
+    "result": {
+      "output": "GNU nano 8.3                       New Buffer *
+Test 123
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               [ Welcome to nano.  For basic help, type Ctrl+G. ]
+^G Help      ^O Write Out ^F Where Is  ^K Cut       ^T Execute   ^C Location
+^X Exit      ^R Read File ^\\ Replace   ^U Paste     ^J Justify   ^/ Go To Line",
+      "success": true,
+    },
+  },
+  {
+    "action": "exit_no_save",
+    "result": {
+      "output": "Key sent: C-x
+Key sent: n
+",
+      "success": true,
+    },
+  },
+]
+`;

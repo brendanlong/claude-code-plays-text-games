@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# Check if a key was provided
+# Check if keys were provided
 if [ $# -eq 0 ]; then
-    echo "Error: No key provided."
-    echo "Usage: $0 KeyName"
+    echo "Error: No keys provided."
+    echo "Usage: $0 KeyName [KeyName2 ...]"
     echo "Examples:"
-    echo "  $0 Escape     # Send Escape key"
-    echo "  $0 C-c        # Send Ctrl+C"
-    echo "  $0 Tab        # Send Tab key"
-    echo "  $0 Enter      # Send Enter key"
+    echo "  $0 Escape        # Send Escape key"
+    echo "  $0 C-c          # Send Ctrl+C"
+    echo "  $0 Tab Enter    # Send Tab key followed by Enter"
+    echo "  $0 a b c Enter  # Send multiple keys in sequence"
     exit 1
 fi
 
@@ -18,6 +18,8 @@ if ! tmux has-session -t game_session 2>/dev/null; then
     exit 1
 fi
 
-# Send the special key without Enter
-tmux send-keys -t game_session "$1"
-echo "Key sent: $1"
+# Send each key in sequence
+for key in "$@"; do
+    tmux send-keys -t game_session "$key"
+    echo "Key sent: $key"
+done

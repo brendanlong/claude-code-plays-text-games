@@ -5,9 +5,13 @@
   "main": "mcp-server.js",
   "type": "module",
   "scripts": {
-    "start": "node mcp-server.js"
+    "start": "node mcp-server.js",
+    "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "devDependencies": {
+    "jest": "^30.0.0"
   }
 }
