@@ -48,3 +48,6 @@
 - Some games may have save/restore features - check their documentation
 - Make sure to come up with a plan and use your TODO list feature
 - You may have notes for the game in the game-notes/ directory
+- Some games, like Dwarf Fortress convey information by flashing cursors. This is very annoying, but if something you expect to see isn't visible, try checking your output a few times.
+- Be careful about making assumptions. Controls frequently don't work the way you think they do (different keys).
+- It's much faster if you send a series of keys at once instead of calling the send_keys tool repeatedly (but check that the result did what you expected!).
