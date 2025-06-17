@@ -5,7 +5,7 @@ This project provides an MCP (Model Context Protocol) server that allows Claude 
 ## Examples
 
 - **[Claude Playing Colossal Cave Adventure](https://youtu.be/ciDHtvSeZQE)** - Watch Claude explore the classic adventure game
-- **[Claude Playing Dwarf Fortress](https://youtu.be/FLmPN03ZQbM)** - See Claude play Dwarf Fortress v0.47 in text mode (setup guide: https://asciinema.org/a/723439)
+- **[Claude Playing Dwarf Fortress](https://youtu.be/FLmPN03ZQbM)** - See Claude play Dwarf Fortress v0.47 in text mode ([setup guide](https://asciinema.org/a/723439))
 
 ## Features
 
