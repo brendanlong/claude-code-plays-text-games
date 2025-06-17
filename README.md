@@ -2,6 +2,11 @@
 
 This project provides an MCP (Model Context Protocol) server that allows Claude to interact with terminal-based games through tmux. It enables Claude to play text-based games like Colossal Cave Adventure, NetHack, Zork, and other terminal games.
 
+## Examples
+
+- **[Claude Playing Colossal Cave Adventure](https://youtu.be/ciDHtvSeZQE)** - Watch Claude explore the classic adventure game
+- **[Claude Playing Dwarf Fortress](https://youtu.be/FLmPN03ZQbM)** - See Claude play Dwarf Fortress v0.47 in text mode (setup guide: https://asciinema.org/a/723439)
+
 ## Features
 
 - **MCP Server**: Provides a clean API for Claude to interact with games
