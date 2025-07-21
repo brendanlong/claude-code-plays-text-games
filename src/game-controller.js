@@ -32,9 +32,72 @@ export async function sendKeys(keys) {
   return await runScript('../scripts/send_key.sh', keys);
 }
 
-export async function readOutput(colorized = false) {
+function addNumbers(lines) {
+  return lines.map((line, index) => `${String(index + 1).padStart(3)}: ${line}`);
+}
+
+function transposeToColumns(content) {
+  const lines = content.split('\n');
+  const maxLength = Math.max(...lines.map(line => line.length));
+  const columns = [];
+  
+  for (let col = 0; col < maxLength; col++) {
+    let column = '';
+    for (let row = 0; row < lines.length; row++) {
+      column += lines[row][col] || ' ';
+    }
+    columns.push(column);
+  }
+  
+  return columns;
+}
+
+export async function readOutput(colorized = false, mode = 'rows', numbers = false) {
   const args = colorized ? ['--colorize'] : [];
-  return await runScript('../scripts/read_output.sh', args);
+  const result = await runScript('../scripts/read_output.sh', args);
+  
+  if (!result.success) {
+    return result;
+  }
+  
+  let content = result.output;
+  let processedOutput;
+  
+  switch (mode) {
+    case 'rows':
+      if (numbers) {
+        const lines = content.split('\n');
+        processedOutput = addNumbers(lines).join('\n');
+      } else {
+        processedOutput = content;
+      }
+      break;
+      
+    case 'cols':
+    case 'columns':
+      const columns = transposeToColumns(content);
+      if (numbers) {
+        processedOutput = addNumbers(columns).join('\n');
+      } else {
+        processedOutput = columns.join('\n');
+      }
+      break;
+      
+    case 'both':
+      const lines = content.split('\n');
+      const cols = transposeToColumns(content);
+      
+      let rowsOutput = numbers ? addNumbers(lines).join('\n') : lines.join('\n');
+      let colsOutput = numbers ? addNumbers(cols).join('\n') : cols.join('\n');
+      
+      processedOutput = `=== ROWS ===\n${rowsOutput}\n\n=== COLUMNS ===\n${colsOutput}`;
+      break;
+      
+    default:
+      return { success: false, error: `Invalid mode '${mode}'. Use 'rows', 'cols', or 'both'` };
+  }
+  
+  return { success: true, output: processedOutput };
 }
 
 export async function endGame() {
@@ -104,6 +167,15 @@ export const toolSchemas = [
         colorized: {
           type: 'boolean',
           description: 'Include ANSI color codes in output (default: false)'
+        },
+        mode: {
+          type: 'string',
+          enum: ['rows', 'cols', 'columns', 'both'],
+          description: 'Output format: "rows" (default), "cols"/"columns", or "both"'
+        },
+        numbers: {
+          type: 'boolean',
+          description: 'Add line numbers to each row/column (default: false)'
         }
       },
       required: []
@@ -133,7 +205,7 @@ export async function handleToolCall(name, args) {
       return await sendKeys(args.keys);
 
     case 'read_output':
-      return await readOutput(args.colorized);
+      return await readOutput(args.colorized, args.mode, args.numbers);
 
     case 'end_game':
       return await endGame();
