@@ -32,8 +32,9 @@ export async function sendKeys(keys) {
   return await runScript('../scripts/send_key.sh', keys);
 }
 
-export async function readOutput() {
-  return await runScript('../scripts/read_output.sh');
+export async function readOutput(colorized = false) {
+  const args = colorized ? ['--colorize'] : [];
+  return await runScript('../scripts/read_output.sh', args);
 }
 
 export async function endGame() {
@@ -99,7 +100,12 @@ export const toolSchemas = [
     description: 'Read the current game output from the terminal',
     inputSchema: {
       type: 'object',
-      properties: {},
+      properties: {
+        colorized: {
+          type: 'boolean',
+          description: 'Include ANSI color codes in output (default: false)'
+        }
+      },
       required: []
     }
   },
@@ -127,7 +133,7 @@ export async function handleToolCall(name, args) {
       return await sendKeys(args.keys);
 
     case 'read_output':
-      return await readOutput();
+      return await readOutput(args.colorized);
 
     case 'end_game':
       return await endGame();
