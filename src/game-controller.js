@@ -104,6 +104,45 @@ export async function endGame() {
   return await runScript('../scripts/end_game.sh');
 }
 
+export async function getCoordinates(character, limit = 10) {
+  // Get the current screen content
+  const result = await readOutput(false, 'rows', false);
+  
+  if (!result.success) {
+    return result;
+  }
+  
+  const lines = result.output.split('\n');
+  const coordinates = [];
+  let totalFound = 0;
+  
+  // Search for the character and collect coordinates
+  for (let row = 0; row < lines.length; row++) {
+    const line = lines[row];
+    for (let col = 0; col < line.length; col++) {
+      if (line[col] === character) {
+        totalFound++;
+        
+        if (coordinates.length < limit) {
+          coordinates.push([row, col]);
+        }
+      }
+    }
+  }
+  
+  const remaining = totalFound - coordinates.length;
+  
+  const coordinateResult = {
+    coordinates: coordinates,
+    remaining: remaining
+  };
+  
+  return {
+    success: true,
+    output: JSON.stringify(coordinateResult, null, 2)
+  };
+}
+
 // Tool schema definitions
 export const toolSchemas = [
   {
@@ -189,6 +228,24 @@ export const toolSchemas = [
       properties: {},
       required: []
     }
+  },
+  {
+    name: 'get_coordinates',
+    description: 'Find all coordinates of a specific character on the screen',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        character: {
+          type: 'string',
+          description: 'The character to search for (single character)'
+        },
+        limit: {
+          type: 'number',
+          description: 'Maximum number of coordinates to return (default: 10)'
+        }
+      },
+      required: ['character']
+    }
   }
 ];
 
@@ -209,6 +266,9 @@ export async function handleToolCall(name, args) {
 
     case 'end_game':
       return await endGame();
+
+    case 'get_coordinates':
+      return await getCoordinates(args.character, args.limit);
 
     default:
       throw new Error(`Unknown tool: ${name}`);
