@@ -32,8 +32,8 @@ export async function sendKeys(keys) {
   return await runScript('../scripts/send_key.sh', keys);
 }
 
-function addNumbers(lines) {
-  return lines.map((line, index) => `${String(index + 1).padStart(3)}: ${line}`);
+function addNumbers(lines, startingNumber = 1) {
+  return lines.map((line, index) => `${String(index + startingNumber).padStart(3)}: ${line}`);
 }
 
 function transposeToColumns(content) {
@@ -52,7 +52,7 @@ function transposeToColumns(content) {
   return columns;
 }
 
-export async function readOutput(colorized = false, mode = 'rows', numbers = false) {
+export async function readOutput(colorized = false, mode = 'rows', numbers = false, topLeft = null, bottomRight = null) {
   const args = colorized ? ['--colorize'] : [];
   const result = await runScript('../scripts/read_output.sh', args);
   
@@ -61,13 +61,28 @@ export async function readOutput(colorized = false, mode = 'rows', numbers = fal
   }
   
   let content = result.output;
+  let lines = content.split('\n');
+  
+  // Apply bounding box if specified
+  if (topLeft && bottomRight) {
+    const [startRow, startCol] = topLeft;
+    const [endRow, endCol] = bottomRight;
+    
+    // Extract the specified region
+    lines = lines.slice(startRow, endRow + 1).map(line => 
+      line.slice(startCol, endCol + 1)
+    );
+    
+    content = lines.join('\n');
+  }
+  
   let processedOutput;
   
   switch (mode) {
     case 'rows':
       if (numbers) {
-        const lines = content.split('\n');
-        processedOutput = addNumbers(lines).join('\n');
+        const startingNumber = topLeft ? topLeft[0] + 1 : 1;
+        processedOutput = addNumbers(lines, startingNumber).join('\n');
       } else {
         processedOutput = content;
       }
@@ -77,18 +92,21 @@ export async function readOutput(colorized = false, mode = 'rows', numbers = fal
     case 'columns':
       const columns = transposeToColumns(content);
       if (numbers) {
-        processedOutput = addNumbers(columns).join('\n');
+        const startingNumber = topLeft ? topLeft[1] + 1 : 1;
+        processedOutput = addNumbers(columns, startingNumber).join('\n');
       } else {
         processedOutput = columns.join('\n');
       }
       break;
       
     case 'both':
-      const lines = content.split('\n');
       const cols = transposeToColumns(content);
       
-      let rowsOutput = numbers ? addNumbers(lines).join('\n') : lines.join('\n');
-      let colsOutput = numbers ? addNumbers(cols).join('\n') : cols.join('\n');
+      const rowStartingNumber = topLeft ? topLeft[0] + 1 : 1;
+      const colStartingNumber = topLeft ? topLeft[1] + 1 : 1;
+      
+      let rowsOutput = numbers ? addNumbers(lines, rowStartingNumber).join('\n') : lines.join('\n');
+      let colsOutput = numbers ? addNumbers(cols, colStartingNumber).join('\n') : cols.join('\n');
       
       processedOutput = `=== ROWS ===\n${rowsOutput}\n\n=== COLUMNS ===\n${colsOutput}`;
       break;
@@ -215,6 +233,24 @@ export const toolSchemas = [
         numbers: {
           type: 'boolean',
           description: 'Add line numbers to each row/column (default: false)'
+        },
+        top_left: {
+          type: 'array',
+          items: {
+            type: 'number'
+          },
+          minItems: 2,
+          maxItems: 2,
+          description: 'Top-left coordinate [row, col] for bounding box selection (0-indexed)'
+        },
+        bottom_right: {
+          type: 'array',
+          items: {
+            type: 'number'
+          },
+          minItems: 2,
+          maxItems: 2,
+          description: 'Bottom-right coordinate [row, col] for bounding box selection (0-indexed, inclusive)'
         }
       },
       required: []
@@ -262,7 +298,7 @@ export async function handleToolCall(name, args) {
       return await sendKeys(args.keys);
 
     case 'read_output':
-      return await readOutput(args.colorized, args.mode, args.numbers);
+      return await readOutput(args.colorized, args.mode, args.numbers, args.top_left, args.bottom_right);
 
     case 'end_game':
       return await endGame();
